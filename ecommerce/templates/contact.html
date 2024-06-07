@@ -19,6 +19,9 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
+        {% for item in contacts %}
+            <h5>{{item.name}},{{item.email}},{{item.message}}</h5>
+        {% endfor %}
     <!-- ***** Contact Area Starts ***** -->
     <div class="contact-us">
     <div class="container">
@@ -35,7 +38,8 @@
                     <h2>Say Hello. Don't Be Shy!</h2>
                     <span>Details to details is what makes Hexashop different from the other themes.</span>
                 </div>
-                <form id="contact" action="" method="post">
+                <form id="contact" action="/contact/save-contact/" method="post">
+                    {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-6">
                         <fieldset>
