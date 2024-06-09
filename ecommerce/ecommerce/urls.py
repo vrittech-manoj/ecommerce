@@ -26,6 +26,6 @@ urlpatterns = [
     path('',views.index),
     path('about/',views.about),
     path('contact/',include('contact.urls')),
-    path('product/',include('product.urls')),
+    path('product/',include('product.urls'),name="contact_us"),
   
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
