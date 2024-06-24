@@ -3,6 +3,8 @@ from django.http import HttpResponse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model,login,logout,authenticate
+from products.models import Category,Product
+from .forms import ProductForm
 
 
 # Create your views here.
@@ -48,9 +50,22 @@ def index(request):
 
 def addProduct(request):
     data = {
-        'add_product_active_page':'active'
+        'add_product_active_page':'active',
+        'categories':Category.objects.all()
     }
-    return render(request,"myadmin/product_form.html",data)
+    print("\n\n",request.method, " this is method")
+    if request.method == "POST":
+        # print("database is effected ..")
+        my_form = ProductForm(request.POST)
+        if my_form.is_valid():
+            my_form.save()
+            data['success_message']="Product creaated succcessfully !!!"
+        else:
+            data['errors'] = my_form.errors
+        
+
+   
+    return render(request,"myadmin/add-product.html",data)
 
 @login_required
 def getProduct(request):
