@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model,login,logout,authenticate
 from products.models import Category,Product
 from .forms import ProductForm
+
 
 
 # Create your views here.
@@ -67,12 +68,38 @@ def addProduct(request):
    
     return render(request,"myadmin/add-product.html",data)
 
-@login_required
+# @login_required
 def getProduct(request):
-    data = {
-        'product_active_page':'active'
-    }
-    return render(request,"myadmin/products.html",data)
+    # data = {
+    #     'product_active_page':'active'
+    # }
+    # return render(request,"myadmin/products.html",data)
+    products = Product.objects.all() #to json 
+    # data = {
+    #         [
+    #             {
+    #                 'id':1,
+    #                 'product_name':'bag',
+    #                 'price':23,
+    #             },
+    #             {
+    #                 'id':2,
+    #                 'product_name':'bag',
+    #                 'price':23,
+    #             },
+    #             {
+    #                 'id':3,
+    #                 'product_name':'bag',
+    #                 'price':23,
+    #             },
+    #         ]
+    #     }
+    # import json
+    # print(data)
+    
+    # data = json.load(data)
+    
+    return JsonResponse({'name':'apple','price':23})
 
 @login_required
 def adminProfile(request):

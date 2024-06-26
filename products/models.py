@@ -5,14 +5,17 @@ from django.db import models
 
 class Category(models.Model):
     cat_name = models.CharField(max_length = 444)
-    # image = models.ImageFiel
+
 
     def __str__(self) -> str:
         return self.cat_name
+    
 
 class Product(models.Model):
     name = models.CharField(max_length = 444)
-    category = models.ForeignKey(Category,on_delete = models.CASCADE,related_name = "products")
+    categories = models.ManyToManyField(Category)
+   
 
     def __str__(self) -> str:
         return self.name
+
